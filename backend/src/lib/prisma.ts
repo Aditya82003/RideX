@@ -7,6 +7,6 @@ const connectionString = config.DATABASE_URL;
 console.log(connectionString)         //--------
 
 const adapter = new PrismaPg({ connectionString });
-const prisma = new PrismaClient({ adapter });
+const prisma= new PrismaClient({ adapter });
 
 export { prisma };
