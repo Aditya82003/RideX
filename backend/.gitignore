@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Environment variables (secrets)
+.env
+.env.*
+!.env.example
+
+# Prisma generated client (your custom output)
+src/generated/prisma/
+
+# Prisma internal engine cache (sometimes created)
+.prisma/
+
+# Build output (if using tsc)
+dist/
+build/
+
+# Logs
+*.log
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/

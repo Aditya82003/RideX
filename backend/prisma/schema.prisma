@@ -1,0 +1,181 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum RideStatus {
+  pending
+  accepted
+  ongoing
+  completed
+  cancelled
+}
+
+enum CaptainStatus {
+  active
+  inactive
+}
+
+enum VehicleType {
+  car
+  motorcycle
+  auto
+}
+
+enum PaymentStatus {
+  pending
+  paid
+  failed
+  refunded
+}
+
+model User {
+  id        String  @id @default(uuid())
+  firstname String
+  lastname  String?
+  email     String  @unique
+  password  String
+  phone     String? @unique
+  socketId  String?
+
+  rides   Ride[]
+  ratings Rating[] @relation("UserRatings")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Captain {
+  // rider basic information
+  id              String        @id @default(uuid())
+  firstname       String
+  lastname        String?
+  email           String        @unique
+  password        String
+  phone           String?       @unique
+  socketId        String?
+  // is rider id active or no
+  status          CaptainStatus @default(inactive)
+  // rider vehicle information
+  vehicleColour   String
+  vehiclePlate    String
+  vehicleCapacity Int
+  vehicleType     VehicleType
+  //rider location information
+  latitude        Float?
+  longitude       Float?
+  //rider rides information
+  rides           Ride[]
+  ratings         Rating[]      @relation("CaptainRatings")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([latitude, longitude])
+  @@index([status])
+}
+
+model Ride {
+  //Ride unique id
+  id          String     @id @default(uuid())
+  // customer id who book that ride
+  userId      String
+  user        User       @relation(fields: [userId], references: [id])
+  //rider id who accept that ride
+  captainId   String?
+  captain     Captain?   @relation(fields: [captainId], references: [id])
+  //ride information
+  pickup      String
+  destination String
+  pickuplat   Float
+  pickuplng   Float
+  destlat     Float
+  destlng     Float
+  //is ride accepted or not
+  status      RideStatus @default(pending)
+  //basic information
+  fare        Float
+  duration    Int?
+  distance    Float?
+  //payment information
+  payment     Payment?
+  //otp for two step verficatiom
+  otp         String
+
+  rating  Rating?
+  rideLog RideTracking[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+  @@index([userId])
+  @@index([captainId])
+}
+
+model RideTracking {
+  id String @id @default(uuid())
+
+  rideId String
+  ride   Ride   @relation(fields: [rideId], references: [id])
+
+  latitude  Float
+  longitude Float
+
+  recordedAt DateTime @default(now())
+
+  @@index([rideId])
+}
+
+model Payment {
+  id String @id @default(uuid())
+
+  rideId String @unique
+  ride   Ride   @relation(fields: [rideId], references: [id])
+
+  amount Float
+
+  orderId   String?
+  signature String?
+
+  status PaymentStatus @default(pending)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Rating {
+  id String @id @default(uuid())
+
+  userId String?
+  user   User?   @relation("UserRatings", fields: [userId], references: [id])
+
+  captainId String?
+  captain   Captain? @relation("CaptainRatings", fields: [captainId], references: [id])
+
+  rideId String @unique
+  ride   Ride   @relation(fields: [rideId], references: [id])
+
+  score   Int
+  comment String?
+
+  createdAt DateTime @default(now())
+}
+
+model BlacklistToken {
+  id        String   @id @default(uuid())
+  toke      String   @unique
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}
