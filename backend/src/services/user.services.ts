@@ -36,9 +36,9 @@ export const updateUserProfileService = async (
                 id: userId
             },
             data: {
-                firstname,
-                lastname,
-                phone
+                ...(firstname !== undefined && {firstname}),
+                ...(lastname !== undefined && {lastname}),
+                ...(phone !== undefined && {phone})
             }, select: {
                 id: true,
                 email: true,

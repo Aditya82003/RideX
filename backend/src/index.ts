@@ -8,6 +8,7 @@ import { BadRequestException } from './utilities/appError'
 import { errorHandler } from './middleware/errorHandler.middleware'
 import authRoutes from './routes/auth.routes'
 import userRoutes from './routes/user.routes'
+import captainRoutes from './routes/captain.routes'
 import { isAuthenticatedCaptain, isAuthenticatedUser } from './middleware/isAuthenticated.middleware'
 
 const app = express()
@@ -29,6 +30,7 @@ app.get('/',asyncHandler(async(req:Request,res:Response)=>{
 
 app.use(`${BASE_PATH}/auth`,authRoutes)
 app.use(`${BASE_PATH}/user`,isAuthenticatedUser,userRoutes)
+app.use(`${BASE_PATH}/captain`,isAuthenticatedCaptain,captainRoutes)
 
 app.use(errorHandler)
 
