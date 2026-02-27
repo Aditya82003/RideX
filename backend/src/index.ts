@@ -1,6 +1,4 @@
 import 'dotenv/config'
-// import dotenv from 'dotenv'
-// dotenv.config()
 
 import express, { Request, Response } from 'express'
 import cors from 'cors'
@@ -8,8 +6,9 @@ import { config } from './config/app.config'
 import { asyncHandler } from './middleware/asyncHandler.middleware'
 import { BadRequestException } from './utilities/appError'
 import { errorHandler } from './middleware/errorHandler.middleware'
-
+import authRoutes from './routes/auth.routes'
 import userRoutes from './routes/user.routes'
+import { isAuthenticatedCaptain, isAuthenticatedUser } from './middleware/isAuthenticated.middleware'
 
 const app = express()
 
@@ -28,7 +27,8 @@ app.get('/',asyncHandler(async(req:Request,res:Response)=>{
     throw new BadRequestException('Bad request')
 }))
 
-app.use(`${BASE_PATH}/user`,userRoutes)
+app.use(`${BASE_PATH}/auth`,authRoutes)
+app.use(`${BASE_PATH}/user`,isAuthenticatedUser,userRoutes)
 
 app.use(errorHandler)
 
