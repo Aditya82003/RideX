@@ -40,7 +40,7 @@ export const isAuthenticatedCaptain = asyncHandler(async (req: Request, res: Res
             id: decoded.id
         }
     })
-    if(!captain){
+    if (!captain) {
         throw new UnauthorizedException('Unauthorized')
     }
     req.captainId = captain.id

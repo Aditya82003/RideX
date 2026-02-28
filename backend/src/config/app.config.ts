@@ -6,7 +6,8 @@ const appConfig =()=>({
     BASE_PATH: getEnv('BASE_PATH','/api'),
     FRONTEND_ORIGIN : getEnv('FRONTEND_ORIGIN'),
     DATABASE_URL : getEnv('DATABASE_URL'),
-    JWT_SECRET : getEnv('JWT_SECRET')
+    JWT_SECRET : getEnv('JWT_SECRET'),
+    GOOGLE_MAP_API : getEnv('GOOGLE_MAP_API')
 })
 
 export const config = appConfig()

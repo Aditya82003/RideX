@@ -5,7 +5,7 @@ import { captainLogoutController, captainRegisterController, captainSigninContro
 const router = express.Router()
 
 router.post('/user/register',userRegisterController)
-router.post('user/signin',userSignInController)
+router.post('/user/signin',userSignInController)
 router.get('/user/logout',userLogoutController)
 
 router.post('/captain/register',captainRegisterController)

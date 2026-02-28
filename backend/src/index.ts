@@ -10,6 +10,9 @@ import authRoutes from './routes/auth.routes'
 import userRoutes from './routes/user.routes'
 import captainRoutes from './routes/captain.routes'
 import { isAuthenticatedCaptain, isAuthenticatedUser } from './middleware/isAuthenticated.middleware'
+import cookieParser from 'cookie-parser'
+import {getDistanceTime} from './services/map.service'
+
 
 const app = express()
 
@@ -20,8 +23,10 @@ app.use(cors({
     origin : config.FRONTEND_ORIGIN,
     credentials : true
 }))
+// console.log(await getDistanceTime("Delhi","Jhansi"))
 
 app.use(express.json())
+app.use(cookieParser())
 
 
 app.get('/',asyncHandler(async(req:Request,res:Response)=>{
