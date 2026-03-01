@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { asyncHandler } from "../middleware/asyncHandler.middleware";
-import { loginUserService, registerCaptainService, registerUserService, signInCaptainService } from "../services/auth.services";
+import { loginUserService, registerCaptainService, registerUserService, signInCaptainService } from "../services/auth.service";
 import { captainRegisterSchema, captainSignInSchema, userLoginSchema, userRegisterSchema } from "../validation/auth.validation";
 import { HTTPSTATUS } from "../config/https.config";
 import { BadRequestException, UnauthorizedException } from "../utilities/appError";

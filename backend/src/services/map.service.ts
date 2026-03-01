@@ -29,14 +29,14 @@ export const getAddressCoordinate = async(address:string)=>{
 }
 
 export const getDistanceTime = async(
-    origin:string,
-    destination:string
+    originLongitude:number,
+    originLatitude:number,
+    destinationLongitude:number,
+    destinationLatitude:number
 )=>{
-    if(!origin || !destination){
+    if(!originLongitude || !originLatitude || !destinationLongitude || !destinationLatitude){
         throw new NotFoundException("Origin or destination not found")
     }
-    const {latitude:originLatitude,longitude:originLongitude}=await getAddressCoordinate(origin)
-    const {latitude:destinationLatitude,longitude:destinationLongitude}=await getAddressCoordinate(destination)
     try{
         const coordinate = `${originLongitude},${originLatitude};${destinationLongitude},${destinationLatitude}`
         const url = `https://api.locationiq.com/v1/directions/driving/${coordinate}`

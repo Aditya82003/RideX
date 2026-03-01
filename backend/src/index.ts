@@ -9,9 +9,9 @@ import { errorHandler } from './middleware/errorHandler.middleware'
 import authRoutes from './routes/auth.routes'
 import userRoutes from './routes/user.routes'
 import captainRoutes from './routes/captain.routes'
+import rideRoutes from './routes/ride.routes'
 import { isAuthenticatedCaptain, isAuthenticatedUser } from './middleware/isAuthenticated.middleware'
 import cookieParser from 'cookie-parser'
-import {getDistanceTime} from './services/map.service'
 
 
 const app = express()
@@ -23,10 +23,10 @@ app.use(cors({
     origin : config.FRONTEND_ORIGIN,
     credentials : true
 }))
-// console.log(await getDistanceTime("Delhi","Jhansi"))
 
 app.use(express.json())
 app.use(cookieParser())
+
 
 
 app.get('/',asyncHandler(async(req:Request,res:Response)=>{
@@ -36,6 +36,7 @@ app.get('/',asyncHandler(async(req:Request,res:Response)=>{
 app.use(`${BASE_PATH}/auth`,authRoutes)
 app.use(`${BASE_PATH}/user`,isAuthenticatedUser,userRoutes)
 app.use(`${BASE_PATH}/captain`,isAuthenticatedCaptain,captainRoutes)
+app.use(`${BASE_PATH}/ride`,rideRoutes)
 
 app.use(errorHandler)
 

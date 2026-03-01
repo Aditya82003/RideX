@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { asyncHandler } from "../middleware/asyncHandler.middleware";
 import { BadRequestException, UnauthorizedException } from "../utilities/appError";
-import { fetchCurrentCaptain, updateCaptainPasswordService, updateCaptainProfileService } from "../services/captain.services";
+import { fetchCurrentCaptain, updateCaptainPasswordService, updateCaptainProfileService } from "../services/captain.service";
 import { HTTPSTATUS } from "../config/https.config";
 import { updateCaptainSchema } from "../validation/captain.validation";
 import { ChangePasswordSchema } from "../validation/user.validation";

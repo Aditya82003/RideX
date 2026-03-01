@@ -2,7 +2,7 @@ import { Request, Response } from "express"
 import { asyncHandler } from "../middleware/asyncHandler.middleware"
 import { BadRequestException, UnauthorizedException } from "../utilities/appError"
 import { HTTPSTATUS } from "../config/https.config"
-import { changePasswordService, fetchCurrentUser, updateUserProfileService } from "../services/user.services"
+import { changePasswordService, fetchCurrentUser, updateUserProfileService } from "../services/user.service"
 import {  ChangePasswordSchema, userUpdateSchema } from "../validation/user.validation"
 
 export const userUpdateProfileController = asyncHandler(async (req: Request, res: Response) => {
