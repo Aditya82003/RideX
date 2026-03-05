@@ -8,7 +8,7 @@ export const Password = z.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@
 export const Phone = z.string().regex(/^[6-9]\d{9}$/)
 
 export const VehicleColour = z.string().min(3)
-export const VehiclePLate = z.string().regex(/^[A-Z]{2}\s\d{2}\s[A-Z]{1,2,3}\s\d{4}$/).nonempty()
+export const VehiclePLate = z.string().regex(/^[A-Z]{2}\s\d{2}\s[A-Z]{1,3}\s\d{4}$/).nonempty()
 export const VehicleCapacity = z.number().min(2)
 export const VehicleTypes = z.enum([
     VehicleType.car,
