@@ -7,7 +7,7 @@ import { updateAvailabilitySchema, updateCaptainSchema } from "../validation/cap
 import { ChangePasswordSchema } from "../validation/user.validation";
 import { getCellId } from "../lib/h3";
 import { redis } from "../lib/redis";
-import { updateDriverLocation } from "../services/driverLocation.service";
+import { removeDriverLocation, updateDriverLocation } from "../utilities/driverLocation";
 
 export const getCurrentCaptainController = asyncHandler(async (req: Request, res: Response) => {
     const captainId = req.captainId
@@ -72,7 +72,10 @@ export const updateAvailabilityController = asyncHandler(async (req: Request, re
 
     const  isAvailable  = await updateAvailabilityService(captainId, body.data)
     if(isAvailable.status === "active" && isAvailable.latitude && isAvailable.longitude){
-       await updateDriverLocation(captainId,isAvailable.latitude,isAvailable.longitude)
+       await updateDriverLocation(captainId,isAvailable.latitude,isAvailable.longitude )
+    }
+    if(isAvailable.status === "inactive"){
+        await removeDriverLocation(captainId)
     }
 
     return res.status(HTTPSTATUS.OK).json({

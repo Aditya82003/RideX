@@ -27,10 +27,10 @@ export const getCellSurge = async(cellId:string)=>{
     let totalRides = 0
 
     for (const cell of neighborCells){
-        const drivers = await redis.get(`driver:cell:${cell}`)
+        const drivers = await redis.scard(`driver:cell:${cell}`)
         const rides = await redis.get(`ride:cell:${cell}`)
 
-        totalDrivers += drivers ? parseInt(drivers) : 0
+        totalDrivers += drivers 
         totalRides += rides ? parseInt(rides) : 0
     }
 

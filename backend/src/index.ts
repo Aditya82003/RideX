@@ -12,6 +12,7 @@ import captainRoutes from './routes/captain.routes'
 import rideRoutes from './routes/ride.routes'
 import { isAuthenticatedCaptain, isAuthenticatedUser } from './middleware/isAuthenticated.middleware'
 import cookieParser from 'cookie-parser'
+import { removeDriverLocation, updateDriverLocation } from './utilities/driverLocation'
 
 
 const app = express()
@@ -27,7 +28,8 @@ app.use(cors({
 app.use(express.json())
 app.use(cookieParser())
 
-
+// await updateDriverLocation("ddf92b3e-a785-458b-b6ca-ca025bf54de4",26.8467,0.9462)
+// await removeDriverLocation("ddf92b3e-a785-458b-b6ca-ca025bf54de4")
 
 app.get('/',asyncHandler(async(req:Request,res:Response)=>{
     throw new BadRequestException('Bad request')
